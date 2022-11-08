@@ -13,7 +13,20 @@ const LoginComponent = () => {
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
   };
-
+  const handleLogin = () => {
+    AuthService.login(email, password)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.token) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+        navigate("/profile");
+      })
+      .catch((error) => {
+        console.log(error.response);
+        setMessage(error.response.data);
+      });
+  };
   return (
     <div style={{ padding: "3rem" }} className="col-md-12">
       <div>
@@ -43,7 +56,7 @@ const LoginComponent = () => {
         </div>
         <br />
         <div className="form-group">
-          <button className="btn btn-primary btn-block">
+          <button onClick={handleLogin} className="btn btn-primary btn-block">
             <span>Login</span>
           </button>
         </div>
