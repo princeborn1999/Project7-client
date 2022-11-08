@@ -49,6 +49,13 @@ const NavComponent = (props) => {
                     </Link>
                   </li>
                 )}
+                {currentUser && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/course">
+                      Course
+                    </Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>
