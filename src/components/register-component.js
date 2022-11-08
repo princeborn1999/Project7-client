@@ -1,30 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../services/auth.service";
 
 const RegisterComponent = () => {
+  const navigate = useNavigate();
+  let [username, setUsername] = useState("");
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [role, setRole] = useState("");
+  const handleChangeUsername = (e) => {
+    setUsername(e.target.value);
+  };
+  const handleChangeEmail = (e) => {
+    setEmail(e.target.value);
+  };
+  const handleChangePassword = (e) => {
+    setPassword(e.target.value);
+  };
+  const handleChangeRole = (e) => {
+    setRole(e.target.value);
+  };
+  const handleRegister = () => {
+    AuthService.register(username, email, password, role)
+      .then(() => {
+        window.alert(
+          "Registration succeeds. You are now redirected to the login page."
+        );
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  };
   return (
     <div style={{ padding: "3rem" }} className="col-md-12">
       <div>
         <div>
           <label htmlFor="username">Username</label>
-          <input type="text" className="form-control" name="username" />
+          <input
+            onChange={handleChangeUsername}
+            type="text"
+            className="form-control"
+            name="username"
+          />
         </div>
         <br />
         <div className="form-group">
           <label htmlFor="email">email</label>
-          <input type="text" className="form-control" name="email" />
+          <input
+            onChange={handleChangeEmail}
+            type="text"
+            className="form-control"
+            name="email"
+          />
         </div>
         <br />
         <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input type="password" className="form-control" name="password" />
+          <input
+            onChange={handleChangePassword}
+            type="password"
+            className="form-control"
+            name="password"
+          />
         </div>
         <br />
         <div className="form-group">
           <label htmlFor="password">role</label>
-          <input type="text" className="form-control" name="role" />
+          <input
+            onChange={handleChangeRole}
+            type="text"
+            className="form-control"
+            name="role"
+          />
         </div>
         <br />
-        <button className="btn btn-primary">
+        <button onClick={handleRegister} className="btn btn-primary">
           <span>Register</span>
         </button>
       </div>

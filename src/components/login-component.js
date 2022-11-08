@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
 
 const LoginComponent = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
   let [message, setMessage] = useState("");
