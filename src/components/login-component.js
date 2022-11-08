@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
 
-const LoginComponent = () => {
+const LoginComponent = (props) => {
+  let { currentUser, setCurrentUser } = props;
   const navigate = useNavigate();
   let [email, setEmail] = useState("");
   let [password, setPassword] = useState("");
@@ -20,6 +21,10 @@ const LoginComponent = () => {
         if (response.data.token) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
+        window.alert(
+          "Login sucessfully, you are now redirect to the profile page."
+        );
+        setCurrentUser(AuthService.getCurrentUser());
         navigate("/profile");
       })
       .catch((error) => {
