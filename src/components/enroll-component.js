@@ -73,8 +73,7 @@ const EnrollComponent = (props) => {
                 <a
                   href="#"
                   onClick={handleEnroll}
-                  className="card-text"
-                  className="btn btn-primary"
+                  className="card-text btn btn-primary"
                   id={course._id}
                 >
                   Enroll
