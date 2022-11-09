@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CourseService from "../services/course.service";
+
 export default function CourseComponent(props) {
   let { currentUser, setCurrentUser } = props;
   const navigate = useNavigate();
   const handleTakeToLogin = () => {
     navigate("/login");
   };
+  let [courseData, setCourseData] = useState(null);
+  useEffect(() => {
+    console.log("Using effect.");
+    let _id;
+    if (currentUser) {
+      _id = currentUser.user._id;
+    } else {
+      _id = "";
+    }
+    CourseService.get(_id)
+      .then((data) => {
+        setCourseData(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <div style={{ padding: "3rem" }}>
       {!currentUser && (
@@ -22,6 +41,21 @@ export default function CourseComponent(props) {
       {currentUser && currentUser.user.role === "instructor" && (
         <div>
           <h1>Welcome to instructor's Course page.</h1>
+        </div>
+      )}
+      {currentUser && courseData && courseData.length !== 0 && (
+        <div>
+          <p>
+            {courseData.map((course) => (
+              <div className="card" style={{ width: "18rem" }}>
+                <div className="card-body">
+                  <h5 className="card-title">{course.title}</h5>
+                  <p className="card-text">{course.description}</p>
+                  <button className="btn btn-primary">{course.price}</button>
+                </div>
+              </div>
+            ))}
+          </p>
         </div>
       )}
       {currentUser && currentUser.user.role === "student" && (

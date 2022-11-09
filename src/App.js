@@ -5,8 +5,9 @@ import NavComponent from "./components/nav-component";
 import RegisterComponent from "./components/register-component";
 import LoginComponent from "./components/login-component";
 import ProfileComponent from "./components/profile-component";
-import AuthService from "./services/auth.service";
 import CourseComponent from "./components/course-component";
+import PostCourseComponent from "./components/postCourse-component";
+import AuthService from "./services/auth.service";
 function App() {
   let [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
   // useEffect(() => {
@@ -42,6 +43,16 @@ function App() {
           path="/course"
           element={
             <CourseComponent
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+            />
+          }
+          exact
+        />
+        <Route
+          path="/postCourse"
+          element={
+            <PostCourseComponent
               currentUser={currentUser}
               setCurrentUser={setCurrentUser}
             />
